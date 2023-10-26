@@ -434,84 +434,81 @@ class MainWindow(QMainWindow):
             print(i)
         print('----------------------')
 
-        try:
-            rt, self.post_urls = api.start_post_write(self.browser, self.contents, [self.ids, self.pwds], self.selected_category_href, PATH_IMG, tag_list, self.url_list, int(timesleep))
-            print("rt : ", rt)
-            if rt:
-                for i in self.post_urls:
-                    main_ui.post_urls.append(i)
+        rt, self.post_urls = api.start_post_write(self.browser, self.contents, [self.ids, self.pwds], self.selected_category_href, PATH_IMG, tag_list, self.url_list, int(timesleep))
+        print("rt : ", rt)
+        if rt:
+            for i in self.post_urls:
+                main_ui.post_urls.append(i)
                 
-                # conn = pymysql.connect(host='mmproject.cgezkk2syeki.ap-northeast-2.rds.amazonaws.com', user='miraemakers', password='445566mmK!', db='mmkdb', charset='utf8')
-                # curs = conn.cursor()
-                # select_query = """
-                # SELECT id
-                # FROM n_c_home_userinfo
-                # WHERE user_id = %s;
-                # """
-                # curs.execute(select_query, self.second.user_id)
-                # result = curs.fetchone()
-                # conn.commit()
+            # conn = pymysql.connect(host='mmproject.cgezkk2syeki.ap-northeast-2.rds.amazonaws.com', user='miraemakers', password='445566mmK!', db='mmkdb', charset='utf8')
+            # curs = conn.cursor()
+            # select_query = """
+            # SELECT id
+            # FROM n_c_home_userinfo
+            # WHERE user_id = %s;
+            # """
+            # curs.execute(select_query, self.second.user_id)
+            # result = curs.fetchone()
+            # conn.commit()
+            
+            # insert_query = """
+            # INSERT INTO naver_cafe_post (user_id, number_of_cafepost, write_number_of_cafepost ,date_time)
+            # VALUES (%s, %s, %s);
+            # """
+            # curs.execute(insert_query, (result[0], int(len(self.selected_category_href)), int(len(self.post_urls)), date))
+            # conn.commit()
+            
+            # conn.close()
                 
-                # insert_query = """
-                # INSERT INTO naver_cafe_post (user_id, number_of_cafepost, write_number_of_cafepost ,date_time)
-                # VALUES (%s, %s, %s);
-                # """
-                # curs.execute(insert_query, (result[0], int(len(self.selected_category_href)), int(len(self.post_urls)), date))
-                # conn.commit()
-                
-                # conn.close()
-                
-                QMessageBox.information(self, NAME, '게시물 작성이 완료되었습니다.')
-            else:
-                QMessageBox.information(self, NAME, f'{self.post_urls} 아이디로 로그인에 실패하였습니다. 로그인 정보를 다시 확인해주세요.')
+            QMessageBox.information(self, NAME, '게시물 작성이 완료되었습니다.')
+        else:
+            QMessageBox.information(self, NAME, f'{self.post_urls} 아이디로 로그인에 실패하였습니다. 로그인 정보를 다시 확인해주세요.')
                 
             
-                
-        except Exception:
-            if rt == 2:
-                print("1. 여기에 저장")
-                # conn = pymysql.connect(host='mmproject.cgezkk2syeki.ap-northeast-2.rds.amazonaws.com', user='miraemakers', password='445566mmK!', db='mmkdb', charset='utf8')
-                # curs = conn.cursor()
-                # select_query = """
-                # SELECT id, macro_program_num
-                # FROM n_c_home_userinfo
-                # WHERE user_id = %s;
-                # """
-                # curs.execute(select_query, self.second.user_id)
-                # conn.commit()
-                
-                # e_result = curs.fetchone()
-                # insert_query = """
-                # INSERT INTO error_msg (user_id, error_message, macro_program_num, date_time)
-                # VALUES (%s, %s, %s, %s);
-                # """
-                # curs.execute(insert_query, (e_result[0], self.post_urls, e_result[1], date))
-                # conn.commit()
-                # conn.close()
-            else:
-                print("2. 여기에 저장")
-                # err_msg = traceback.format_exc()
-                
-                # conn = pymysql.connect(host='mmproject.cgezkk2syeki.ap-northeast-2.rds.amazonaws.com', user='miraemakers', password='445566mmK!', db='mmkdb', charset='utf8')
-                # curs = conn.cursor()
-                # select_query = """
-                # SELECT id, macro_program_num
-                # FROM n_c_home_userinfo
-                # WHERE user_id = %s;
-                # """
-                # curs.execute(select_query, self.second.user_id)
-                # conn.commit()
-                
-                # e_result = curs.fetchone()
-                # insert_query = """
-                # INSERT INTO error_msg (user_id, error_message, macro_program_num, date_time)
-                # VALUES (%s, %s, %s, %s);
-                # """
-                # curs.execute(insert_query, (e_result[0], err_msg, e_result[1], date))
-                # conn.commit()
-                # conn.close()
+        # if rt == 2:
+        #     print("1. 여기에 저장")
+            # conn = pymysql.connect(host='mmproject.cgezkk2syeki.ap-northeast-2.rds.amazonaws.com', user='miraemakers', password='445566mmK!', db='mmkdb', charset='utf8')
+            # curs = conn.cursor()
+            # select_query = """
+            # SELECT id, macro_program_num
+            # FROM n_c_home_userinfo
+            # WHERE user_id = %s;
+            # """
+            # curs.execute(select_query, self.second.user_id)
+            # conn.commit()
             
-            QMessageBox.information(self, NAME, '에러가 발생하였습니다. \t\n다시 시도후 동일 증상 발생 시 \t\n관리자에게 문의 바랍니다.')
+            # e_result = curs.fetchone()
+            # insert_query = """
+            # INSERT INTO error_msg (user_id, error_message, macro_program_num, date_time)
+            # VALUES (%s, %s, %s, %s);
+            # """
+            # curs.execute(insert_query, (e_result[0], self.post_urls, e_result[1], date))
+            # conn.commit()
+            # conn.close()
+        # else:
+        #     print("2. 여기에 저장")
+            # err_msg = traceback.format_exc()
+            
+            # conn = pymysql.connect(host='mmproject.cgezkk2syeki.ap-northeast-2.rds.amazonaws.com', user='miraemakers', password='445566mmK!', db='mmkdb', charset='utf8')
+            # curs = conn.cursor()
+            # select_query = """
+            # SELECT id, macro_program_num
+            # FROM n_c_home_userinfo
+            # WHERE user_id = %s;
+            # """
+            # curs.execute(select_query, self.second.user_id)
+            # conn.commit()
+            
+            # e_result = curs.fetchone()
+            # insert_query = """
+            # INSERT INTO error_msg (user_id, error_message, macro_program_num, date_time)
+            # VALUES (%s, %s, %s, %s);
+            # """
+            # curs.execute(insert_query, (e_result[0], err_msg, e_result[1], date))
+            # conn.commit()
+            # conn.close()
+        
+        # QMessageBox.information(self, NAME, '에러가 발생하였습니다. \t\n다시 시도후 동일 증상 발생 시 \t\n관리자에게 문의 바랍니다.')
             
         self.browser = None
 

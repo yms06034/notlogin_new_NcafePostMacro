@@ -162,6 +162,9 @@ def CafePostWriting(browser, TITLE, cafe_url, comments, PATH_IMG, tag_list, url_
 
     browser.switch_to.window(browser.window_handles[0])
     browser.get(cafe_url)        
+
+    time.sleep(1)
+    n_cafe_name = find_css('h2.cafe_name', browser).text
     time.sleep(2)
 
     browser.switch_to.frame("cafe_main")
@@ -178,6 +181,8 @@ def CafePostWriting(browser, TITLE, cafe_url, comments, PATH_IMG, tag_list, url_
         pass
 
     if len(browser.window_handles) == 1:
+        print('다른 게시물로 넘어감')
+        print('여기서 끝')
         return 0, 'end'
 
     browser.switch_to.window(browser.window_handles[1])
@@ -185,17 +190,17 @@ def CafePostWriting(browser, TITLE, cafe_url, comments, PATH_IMG, tag_list, url_
     try:
         title_area = find_className('textarea_input', browser)
         title_area.send_keys(TITLE)
-        time.sleep(1.5)
+        time.sleep(3)
 
         editor_id = browser.find_elements(By.TAG_NAME, 'iframe')[-1]
         browser.switch_to.frame(editor_id)
         
         browser.find_element(By.TAG_NAME, 'body').send_keys(comments)
-        time.sleep(1.5)
+        time.sleep(2.5)
         
         browser.find_element(By.TAG_NAME, 'body').send_keys("\n")
         browser.find_element(By.TAG_NAME, 'body').send_keys("\n")
-        time.sleep(1.5)
+        time.sleep(2.5)
 
         browser.switch_to.window(browser.window_handles[1])
         time.sleep(3)
@@ -274,7 +279,7 @@ def CafePostWriting(browser, TITLE, cafe_url, comments, PATH_IMG, tag_list, url_
     except Exception as ex:
         time.sleep(2)
         browser.close()
-        return 2, ex
+        return 0, 'end'
     
     return 1, post_url
 
@@ -312,17 +317,23 @@ def start_post_write(browser, manuscript, naver_id_list, cafe_info_urls, PATH_IM
             print(f"{random_int}째 내용")
 
             cafe_url = cafe_info_urls[j]
-
-            result, post_url = CafePostWriting(browser, TITLE, cafe_url, comments, PATH_IMG, tag_list, url_list)
+            try:
+                result, post_url = CafePostWriting(browser, TITLE, cafe_url, comments, PATH_IMG, tag_list, url_list)
+            except Exception as ex:
+                print(ex)
+                pass
+            
             time.sleep(timesleep)
             print("post_url : ", post_url)
             
-            if result == 2:
-                browser.quit()
-                return 2, post_url
+            # if result == 2:
+            #     browser.quit()
+            #     return 2, post_url
 
             if result:
                 post_urls.append(post_url[0])
+            else:
+                print('기재할 수 없는 게시판 입니다.')
 
         browser.switch_to.window(browser.window_handles[0])
         time.sleep(1)
