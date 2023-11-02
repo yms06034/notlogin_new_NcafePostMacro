@@ -195,7 +195,8 @@ def CafePostWriting(browser, TITLE, cafe_url, comments, PATH_IMG, tag_list, url_
         editor_id = browser.find_elements(By.TAG_NAME, 'iframe')[-1]
         browser.switch_to.frame(editor_id)
         
-        browser.find_element(By.TAG_NAME, 'body').send_keys(comments)
+        pyperclip.copy(comments)
+        browser.find_element(By.TAG_NAME, 'body').send_keys(Keys.CONTROL, "v")
         time.sleep(2.5)
         
         browser.find_element(By.TAG_NAME, 'body').send_keys("\n")
